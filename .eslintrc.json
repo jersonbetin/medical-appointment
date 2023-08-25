@@ -1,0 +1,48 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "next/core-web-vitals"
+  ],
+  "parser": "babel-eslint",
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "react-hooks"],
+  "rules": {
+    "react/prop-types": "off",
+    "indent": ["error", 2],
+    "no-tabs": "error",
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"],
+    "comma-dangle": ["error", "always-multiline"],
+    "object-curly-spacing": ["error", "always"],
+    "array-bracket-spacing": ["error", "necer"],
+    "no-unused-vars": [
+      "warn",
+      {
+        "ignoreRestSiblings": true
+      }
+    ],
+    "@typescript-eslint/quotes": [
+      "error",
+      "single",
+      {
+        "allowTemplateLiterals": true
+      }
+    ]
+  }
+}
