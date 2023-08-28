@@ -1,28 +1,59 @@
 import Datepicker from 'react-tailwindcss-datepicker';
 import moment from 'moment';
+// import { GetStaticProps } from 'next';
 import Image from 'next/image';
 
-import Button from '../commons/Button';
-import Dropdown from '../commons/Dropdown';
-import avatar from '@public/Img/doc.webp';
+import avatar_women from '@public/Img/doc.webp';
+import avatar_men from '@public/Img/doc_men.jpeg';
+import Button from '@/components/commons/Button';
+import Dropdown from '@/components/commons/Dropdown';
+import { IDoctors } from '@/interfaces/doctors';
+import { useState } from 'react';
 
-const AppointmentContent = () => {
+interface AppointmentContentProps {
+  doctors?: Array<IDoctors>;
+}
+
+const AppointmentContent = ({ doctors = [] }: AppointmentContentProps) => {
+  const [select, setSelect] = useState<IDoctors | null>(doctors[0]);
+
   const Select = () => {
-    const item = {
-      url: avatar,
-      name: 'Pedro Perez',
-    };
+    const avatar = select?.gender === 'male' ? avatar_men : avatar_women;
     return (
       <div className="flex items-center ml-2">
         <div className="avatar">
           <div className="w-6 rounded-full">
-            <Image src={item.url} alt="avatar/select" />
+            <Image src={avatar} alt="avatar/select" />
           </div>
         </div>
         <span className="ml-2 font-medium leading-6 text-base">
-          {item.name}
+          {select?.name}
         </span>
       </div>
+    );
+  };
+
+  const DoctorItem = ({ doctor }: { doctor: IDoctors }) => {
+    const avatar = doctor.gender === 'male' ? avatar_men : avatar_women;
+
+    return (
+      <li
+        onClick={() => {
+          setSelect(doctor);
+        }}
+        aria-hidden="true"
+      >
+        <div className="flex items-center ml-2">
+          <div className="avatar">
+            <div className="w-6 rounded-full">
+              <Image src={avatar} alt="avatar/select" />
+            </div>
+          </div>
+          <span className="ml-2 font-medium leading-6 text-base">
+            {doctor.name}
+          </span>
+        </div>
+      </li>
     );
   };
 
@@ -56,13 +87,10 @@ const AppointmentContent = () => {
             Agenda del medico:
           </span>
           <Dropdown tabIndex={0} label={<Select />}>
-            <ul className="menu">
-              <li>
-                <span>Item 1</span>
-              </li>
-              <li>
-                <span>Item 2</span>
-              </li>
+            <ul className="menu w-80">
+              {doctors.map((doctor: IDoctors) => (
+                <DoctorItem key={doctor.name} doctor={doctor} />
+              ))}
             </ul>
           </Dropdown>
         </div>
