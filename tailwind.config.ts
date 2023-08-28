@@ -1,6 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 // let paths = require('react-tailwindcss-datepicker/dist/index');
-console.log(__dirname);
 module.exports = {
   darkMode: '',
   purge: [

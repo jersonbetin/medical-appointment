@@ -16,7 +16,7 @@ const Dropdown = ({ label, children, tabIndex }: DropdownProps) => {
       </label>
       <div
         tabIndex={tabIndex}
-        className="dropdown-content z-[1] p-2 shadow bg-white rounded-box w-60"
+        className="dropdown-content z-[1] p-2 shadow-sm bg-white rounded-box w-min"
       >
         {children}
       </div>
