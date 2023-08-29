@@ -9,13 +9,22 @@ import Button from '@/components/commons/Button';
 import Dropdown from '@/components/commons/Dropdown';
 import { IDoctors } from '@/interfaces/doctors';
 import { useState } from 'react';
+import { IAppointment } from '@/interfaces/appointments';
+import AppointmentList from './AppointmentList';
 
 interface AppointmentContentProps {
   doctors?: Array<IDoctors>;
+  appointments?: Array<IAppointment>;
+  patients?: Array<any>;
 }
 
-const AppointmentContent = ({ doctors = [] }: AppointmentContentProps) => {
+const AppointmentContent = ({
+  doctors = [],
+  appointments = [],
+  patients = [],
+}: AppointmentContentProps) => {
   const [select, setSelect] = useState<IDoctors | null>(doctors[0]);
+  console.log(appointments, patients);
 
   const Select = () => {
     const avatar = select?.gender === 'male' ? avatar_men : avatar_women;
@@ -96,14 +105,18 @@ const AppointmentContent = ({ doctors = [] }: AppointmentContentProps) => {
         </div>
       </div>
       <div className="card-body">
-        <div className="flex flex-col  items-center text-center">
-          <p className="text-base leading-6 font-semibold">
-            No se encontraron registros
-          </p>
-          <p className="text-gray-600 font-normal text-sm max-w-xs">
-            El médico seleccionado no tiene ninguna cita el día de hoy.
-          </p>
-        </div>
+        {appointments.length === 0 ? (
+          <div className="flex flex-col  items-center text-center">
+            <p className="text-base leading-6 font-semibold">
+              No se encontraron registros
+            </p>
+            <p className="text-gray-600 font-normal text-sm max-w-xs">
+              El médico seleccionado no tiene ninguna cita el día de hoy.
+            </p>
+          </div>
+        ) : (
+          <AppointmentList />
+        )}
       </div>
     </div>
   );

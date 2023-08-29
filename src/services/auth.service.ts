@@ -16,7 +16,7 @@ class AuthService {
       .post('/generateToken', { userId: username })
       .then(({ data }) => {
         if (data?.token) {
-          return data;
+          return data?.token;
         }
         throw Error('token not exist');
       });
