@@ -7,13 +7,10 @@ class DoctorService {
   protected readonly instance: AxiosInstance;
 
   public constructor(url: string) {
-    const token = Cookie.get(TOKEN);
-
     this.instance = axios.create({
       baseURL: url,
       timeout: 3000,
       timeoutErrorMessage: 'Time Out',
-      headers: { Authorization: `Bearer ${token}` },
     });
   }
 
@@ -33,13 +30,17 @@ class DoctorService {
       .post('/searchResource', data, config)
       .then(({ data }) => {
         return data?.resourcesFound?.resourcesData?.map((item: any) => {
+          const id = item.resource.id;
           const name = `${item.resource.name?.[0].prefix?.[0]} ${item.resource.name?.[0].given?.[0]} ${item.resource.name?.[0].family}`;
           const gender = item.resource.gender;
+          const resourceType = item.resource.resourceType;
           const address: IAddress = item.resource.address;
 
           return {
+            id,
             name,
             gender,
+            resourceType,
             address,
           } as IDoctors;
         });
