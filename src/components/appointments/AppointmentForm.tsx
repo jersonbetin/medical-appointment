@@ -99,7 +99,6 @@ const AppointmentForm = ({
   };
 
   const onHandleSubmit = () => {
-    console.log('submit');
     createAppointment();
   };
 
@@ -111,7 +110,6 @@ const AppointmentForm = ({
   );
 
   const disabled = !currentDoctor || !currentPatient;
-  console.log(disabled);
 
   return (
     <div className="card h-full overflow-y-auto">
