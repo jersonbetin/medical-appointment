@@ -1,4 +1,4 @@
-import { IAppointment } from '@/interfaces/appointments';
+import { AppointmentInput, IAppointment } from '@/interfaces/appointments';
 import axios, { AxiosInstance } from 'axios';
 
 class AppointmentService {
@@ -12,7 +12,10 @@ class AppointmentService {
     });
   }
 
-  searchByDate = (date: string, token?: string): Promise<Array<any>> => {
+  searchByDate = (
+    date: string,
+    token?: string,
+  ): Promise<Array<IAppointment>> => {
     const data = {
       resourceType: 'Appointment',
       params: {
@@ -54,6 +57,45 @@ class AppointmentService {
             type,
           } as IAppointment;
         });
+      });
+  };
+
+  create = (
+    resource: AppointmentInput,
+    token?: string,
+  ): Promise<IAppointment> => {
+    const config = {
+      headers: { Authorization: `Bearer ${token || ''}` },
+    };
+
+    return this.instance
+      .post('/createResource', resource, config)
+      .then(({ data: appoint }) => {
+        const patientCode =
+          appoint.resourceData.participant.find(
+            (participant: any) =>
+              participant?.actor?.reference?.includes?.('Patient'),
+          )?.actor?.reference || '';
+
+        const doctorCode =
+          appoint.resourceData.participant.find(
+            (participant: any) =>
+              participant?.actor?.reference?.includes?.('Practitioner'),
+          )?.actor?.reference || '';
+
+        const type =
+          appoint?.resourceData?.serviceType?.[0]?.coding?.[0]?.display || '';
+
+        return {
+          id: appoint.resourceData.id,
+          date: {
+            start: appoint.resourceData.start,
+            end: appoint.resourceData.end,
+          },
+          patientId: patientCode.split('/')[1],
+          doctorId: doctorCode.split('/')[1],
+          type,
+        } as IAppointment;
       });
   };
 }

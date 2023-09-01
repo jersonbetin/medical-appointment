@@ -13,26 +13,28 @@ import merge from 'deepmerge';
 import { isEqual } from 'lodash';
 import { useMemo } from 'react';
 
-interface PageProps {
+import { NEXT_PUBLIC_GRAPHQL_URI, TOKEN } from '@/utils/constants';
+
+export interface PageProps {
   props?: Record<string, any>;
 }
 
 export const APOLLO_STATE_PROPERTY_NAME = '__APOLLO_STATE__';
-export const COOKIES_TOKEN_NAME = 'jwt';
+// export const COOKIES_TOKEN_NAME = 'jwt';
 
 const getToken = (req?: IncomingMessage) => {
   const parseCookie = cookie.parse(
-    req ? req.headers.cookie ?? '' : document.cookie,
+    req ? req.headers.cookie ?? '' : document?.cookie,
   );
 
-  return parseCookie[COOKIES_TOKEN_NAME];
+  return parseCookie[TOKEN];
 };
 
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
 const createApolloClient = (ctx?: GetServerSidePropsContext | null) => {
   const httpLink = new HttpLink({
-    uri: process.env.NEXT_PUBLIC_GRAPHQL_URI,
+    uri: NEXT_PUBLIC_GRAPHQL_URI,
     credentials: 'same-origin',
   });
 
@@ -85,7 +87,7 @@ export const initialApollo = (
 export const addApolloState = (
   client: ApolloClient<NormalizedCacheObject>,
   pageProps: PageProps,
-) => {
+): PageProps => {
   if (pageProps?.props) {
     pageProps.props[APOLLO_STATE_PROPERTY_NAME] = client.cache.extract();
   }

@@ -1,11 +1,19 @@
 interface ButtonProps {
   label: string;
   type?: 'submit' | 'button' | 'reset';
-  onClick: () => void;
+  onClick?: () => void;
   className?: string;
   size?: 'lg' | 'sm' | 'xs';
-  color?: 'neutral' | 'primary' | 'secondary' | 'accent' | 'ghost' | 'link';
+  color?:
+    | 'neutral'
+    | 'primary'
+    | 'secondary'
+    | 'accent'
+    | 'ghost'
+    | 'link'
+    | 'active';
   loading?: boolean;
+  disabled?: boolean;
 }
 
 const Button = ({
@@ -16,10 +24,17 @@ const Button = ({
   size,
   className = '',
   loading,
+  disabled = false,
 }: ButtonProps) => {
   const variant = `${className} btn-${color} ${size ? `btn-${size}` : ''}`;
+
   return (
-    <button className={`btn ${variant}`} type={type} onClick={onClick}>
+    <button
+      disabled={disabled}
+      className={`btn ${variant}`}
+      type={type}
+      onClick={onClick}
+    >
       {loading && <span className="loading loading-spinner"></span>}
       {label}
     </button>

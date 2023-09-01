@@ -4,10 +4,16 @@ interface DropdownProps {
   label: string | ReactNode;
   children: ReactNode;
   tabIndex: number;
+  className?: String;
 }
-const Dropdown = ({ label, children, tabIndex }: DropdownProps) => {
+const Dropdown = ({
+  label,
+  children,
+  tabIndex,
+  className = 'dropdown-end',
+}: DropdownProps) => {
   return (
-    <div className="dropdown dropdown-bottom dropdown-end">
+    <div className={`dropdown dropdown-bottom ${className}`}>
       <label
         tabIndex={tabIndex}
         className="input flex bg-white p-2.5 border border-gray-300  cursor-pointer"

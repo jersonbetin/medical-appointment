@@ -4,12 +4,18 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { typeDefs } from './schemas';
 import { resolvers } from './resolvers';
+import { GraphQLError } from 'graphql';
 
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
   introspection: true,
   context: (context) => context,
+  formatError: (error: GraphQLError) => {
+    console.error(error);
+
+    return error;
+  },
   plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
 });
 

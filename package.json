@@ -6,7 +6,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "next:dev": "next dev",
+    "next:dev": "NODE_ENV=development next dev",
     "dev": "run-p next:dev"
   },
   "dependencies": {

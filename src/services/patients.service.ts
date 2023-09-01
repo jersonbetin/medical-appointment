@@ -26,7 +26,19 @@ class PatientService {
     return this.instance
       .post('/searchResource', data, config)
       .then(({ data }) => {
-        return data?.resourcesFound?.resourcesData;
+        return data?.resourcesFound?.resourcesData?.map((item: any) => {
+          const id = item.resource.id;
+          const gender = item.resource.gender;
+          const birthDate = item.resource.birthDate;
+          const name = `${item.resource.name?.[0]?.given?.[0]} ${item.resource.name?.[0]?.family}`;
+
+          return {
+            id,
+            name,
+            gender,
+            birthDate,
+          };
+        });
       });
   };
 }

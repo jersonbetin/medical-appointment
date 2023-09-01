@@ -34,9 +34,53 @@ export const typeDefs = gql`
     type: String
   }
 
+  type Patients {
+    id: String!
+    name: String!
+    birthDate: String!
+    gender: String!
+  }
+
+  input Coding {
+    system: String!
+    code: String!
+    display: String!
+  }
+
+  input ObjectCoding {
+    coding: [Coding]!
+  }
+  input Actor {
+    reference: String!
+  }
+
+  input Participant {
+    actor: Actor!
+    status: String!
+  }
+
+  input ResourceData {
+    resourceType: String!
+    status: String!
+    serviceType: [ObjectCoding]!
+    start: String!
+    end: String!
+    participant: [Participant]!
+  }
+
+  input AppointmentInput {
+    resourceType: String!
+    resourceData: ResourceData!
+  }
+
   type Query {
     login(username: String): User
     getDoctors: [Doctor]
+    getPatients: [Patients]
     getAppointments(date: String): [Appointment]
+  }
+
+  type Mutation {
+    createAppointment(input: AppointmentInput!): Appointment
   }
 `;
