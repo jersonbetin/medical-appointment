@@ -8,7 +8,7 @@ export interface IAddress {
 
 export interface IDoctors {
   id: string | number;
-  resourceType: string;
+  resourceType?: string;
   name: string;
   gender?: string;
   address?: [IAddress] | IAddress;
