@@ -248,7 +248,7 @@ const AppointmentForm = ({
         />
         <Button
           label="Confirmar"
-          className="btn-md"
+          className="btn-md disabled:text-gray-400"
           onClick={onHandleSubmit}
           loading={loading}
           disabled={disabled}
