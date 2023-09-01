@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Cookie from 'js-cookie';
 
 import LogoMark from '@public/Logomark.svg';
-import avatar from '@public/img/avatar.jpg';
+import avatar from '@public/Img/avatar.jpg';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
