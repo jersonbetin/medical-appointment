@@ -42,7 +42,6 @@ export const getServerSideProps = async (
       props: { doctors, appointmentList, patients },
     });
   } catch (e) {
-    console.log(e);
     return addApolloState(apolloClient, {
       props: {
         doctors: [],
